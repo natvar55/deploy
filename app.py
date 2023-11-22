@@ -65,7 +65,7 @@ ground = ['Mirpur', 'Abu Dhabi', 'Dubai (DSC)', 'Bristol', 'Cardiff',
        'Kingston', 'Gwalior', 'Vadodara', 'Kanpur', 'Rawalpindi',
        'Belfast', 'The Hague']
 
-st.title('Cricket Match Score Predictor for Player')
+st.title('Cricket Score Predictor for Player')
 
 Player = st.selectbox('Select Player',sorted(player))
 col1, col2 = st.columns(2)
