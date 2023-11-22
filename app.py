@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
-from tensorflow import keras
+from xgboost import XGBRegressor
 
 pipe = pickle.load(open('model.pkl','rb'))
 player=['Hashmatullah Shahidi', 'Rashid Khan', 'Abdul Rahman','Fazalhaq Farooqi', 'Mujeeb Ur Rahman', 'Naveen-ul-Haq',
