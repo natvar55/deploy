@@ -93,7 +93,6 @@ with col7:
 
 
 if st.button('Predict Score'):
-       input_df = pd.DataFrame(
-     {'player': [Player], 'opposition': [Opposition],'ground':[Ground], 'avg_4': [avg_4s],'avg_6': [avg_6s], 'avg_bf': [avg_bf], 'avg_sr': [avg_sr], 'avg_mins': [avg_mins]})
-    result = pipe.predict(df)
+    input_df = pd.DataFrame({'player': [Player], 'opposition': [Opposition],'ground':[Ground], 'avg_4': [avg_4s],'avg_6': [avg_6s], 'avg_bf': [avg_bf], 'avg_sr': [avg_sr], 'avg_mins': [avg_mins]})
+    result = pipe.predict(input_df)
     st.header("Predicted Runs " + str(int(result[0])))
