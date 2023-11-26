@@ -93,21 +93,7 @@ with col7:
 
 
 if st.button('Predict Score'):
-    df = pd.DataFrame({f'player_{name}': [0] for name in player})
-    df1 = pd.DataFrame({f'opposition_{name}': [0] for name in opposition})
-    df = pd.concat([df, df1], axis=1)
-    df1 = pd.DataFrame({f'ground_{name}': [0] for name in ground})
-    df = pd.concat([df, df1], axis=1)
-    str1 = f'player_{Player}'
-    df[str1]=1
-    str1 = f'opposition_{Opposition}'
-    df[str1]=1
-    str1 = f'ground_{Ground}'
-    df[str1]=1
-    df['avg_4s']=avg_4s
-    df['avg_6s']=avg_6s
-    df['avg_bf']=avg_bf
-    df['avg_sr']=avg_sr
-    df['avg_mins']=avg_mins
+       input_df = pd.DataFrame(
+     {'player': [Player], 'opposition': [Opposition],'ground':[Ground], 'avg_4': [avg_4s],'avg_6': ['avg_6s'], 'avg_bf': [avg_bf], 'avg_sr': [avg_sr], 'avg_mins': [avg_mins]})
     result = pipe.predict(df)
     st.header("Predicted Runs " + str(int(result[0])))
