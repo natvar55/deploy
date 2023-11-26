@@ -151,4 +151,4 @@ if st.button('Predict Score'):
     df[str1]=1
     scaler.transform(df);
     result = pipe.predict(df)
-    st.header("Predicted Runs " + str(int(result[0])))
+    st.header("Predicted Runs " + str(df.columns))
