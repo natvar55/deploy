@@ -148,8 +148,8 @@ if st.button('Predict Score'):
     df[str1]=1
     str1 = f'ground_{Ground}'
     df[str1]=1
-    # scaler.transform(df);
+    scaler.transform(df);
     result = pipe.predict(df)
-    st.header("Predicted Runs " + str(df.columns))
+    st.header("Predicted Runs " + str(int(result[0]))
 
 
