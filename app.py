@@ -131,24 +131,26 @@ with col7:
 
 
 if st.button('Predict Score'):
-    df=pd.DataFrame()
-    df['avg_6']=avg_6s
-    df['avg_4']=avg_4s
-    df['avg_bf']=avg_bf
-    df['avg_sr']=avg_sr
-    df['avg_mins']=avg_mins
-    df1 = pd.DataFrame({f'player_{name}': [0] for name in player})
-    df = pd.concat([df, df1], axis=1)
-    df1 = pd.DataFrame({f'ground_{name}': [0] for name in ground})
-    df = pd.concat([df, df1], axis=1)
-    df1 = pd.DataFrame({f'opposition_{name}': [0] for name in opposition})
-    df = pd.concat([df, df1], axis=1)
-    str1 = f'player_{Player}'
-    df[str1]=1
-    str1 = f'opposition_{Opposition}'
-    df[str1]=1
-    str1 = f'ground_{Ground}'
-    df[str1]=1
-    # scaler.transform(df);
-    result = pipe.predict(df)
-    st.header("Predicted Runs " + str(df.columns))
+    input_data = pd.DataFrame({
+        'avg_6': [avg_6s],
+        'avg_4': [avg_4s],
+        'avg_bf': [avg_bf],
+        'avg_sr': [avg_sr],
+        'avg_mins': [avg_mins],
+        f'player_{Player}': [0] for name in player,
+        f'ground_{Ground}': [0] for name in ground,
+        f'opposition_{Opposition}': [0] for name in opposition
+    })
+
+    # Mark the selected player, ground, and opposition
+    input_data[f'player_{Player}'] = 1
+    input_data[f'ground_{Ground}'] = 1
+    input_data[f'opposition_{Opposition}'] = 1
+
+    # Scale the input data using the scaler fitted on X_train
+    scaled_input_data = scaler.transform(input_data)
+
+    # Make the prediction
+    result = pipe.predict(scaled_input_data)
+
+    st.header("Predicted Runs: " + str(df.columns))
