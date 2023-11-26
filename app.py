@@ -3,44 +3,6 @@ import pickle
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
-from sklearn.preprocessing import StandardScaler
-
-df = pd.read_csv('Batsman_matches4.csv')
-df = df[df['runs'].isin(['absent', 'sub']) == False]
-df=df[df['inns'].isin(['Ireland','Bangladesh'])==False]
-df.replace('-', 0, inplace=True)
-df=df.drop(['SR','dismissal','odi_id','4s','6s','BF','mins'],axis=1)
-df['runs'] = pd.to_numeric(df['runs']).astype('int')
-df['pos'] = pd.to_numeric(df['pos']).astype('int')
-df['inns'] = pd.to_numeric(df['inns']).astype('int')
-values_to_keep = ['India','Sri Lanka','Bangladesh','Pakistan','England','New Zealand','South Africa','Australia','Netherlands','Afghanistan']
-df = df[df['opposition'].isin(values_to_keep)]
-# One-hot encoding using pandas
-one_hot_encoded = pd.get_dummies(df['player'], prefix='player')
-
-# Concatenate the one-hot encoded columns to the original DataFrame
-df = pd.concat([df, one_hot_encoded], axis=1)
-# One-hot encoding using pandas
-one_hot_encoded = pd.get_dummies(df['ground'], prefix='ground')
-
-# Concatenate the one-hot encoded columns to the original DataFrame
-df = pd.concat([df, one_hot_encoded], axis=1)
-# One-hot encoding using pandas
-one_hot_encoded = pd.get_dummies(df['opposition'], prefix='opposition')
-
-# Concatenate the one-hot encoded columns to the original DataFrame
-df = pd.concat([df, one_hot_encoded], axis=1)
-df['date'] = pd.to_datetime(df['date'], format='%d-%b-%y')
-
-df['timestamp'] = df['date'].astype(int) // 10**9  # Convert to Unix timestamp
-
-df['year'] = df['date'].dt.year
-df['month'] = df['date'].dt.month
-df['day'] = df['date'].dt.day
-condition_train =(df['year'] > 2018)
-X_train = df.loc[condition_train]
-X_train=X_train.drop(['timestamp','opposition','date','player','ground','inns','pos','runs','year','month','day'],axis=1)
-scaler =  StandardScaler().fit(X_train)
 
 pipe = pickle.load(open('model.pkl','rb'))
 player=['Hashmatullah Shahidi', 'Rashid Khan', 'Abdul Rahman','Fazalhaq Farooqi', 'Mujeeb Ur Rahman', 'Naveen-ul-Haq',
@@ -131,26 +93,21 @@ with col7:
 
 
 if st.button('Predict Score'):
-    input_data = pd.DataFrame({
-        'avg_6': [avg_6s],
-        'avg_4': [avg_4s],
-        'avg_bf': [avg_bf],
-        'avg_sr': [avg_sr],
-        'avg_mins': [avg_mins],
-        f'player_{Player}': [0] for name in player,
-        f'ground_{Ground}': [0] for name in ground,
-        f'opposition_{Opposition}': [0] for name in opposition
-    })
-
-    # Mark the selected player, ground, and opposition
-    input_data[f'player_{Player}'] = 1
-    input_data[f'ground_{Ground}'] = 1
-    input_data[f'opposition_{Opposition}'] = 1
-
-    # Scale the input data using the scaler fitted on X_train
-    scaled_input_data = scaler.transform(input_data)
-
-    # Make the prediction
-    result = pipe.predict(scaled_input_data)
-
-    st.header("Predicted Runs: " + str(df.columns))
+    df = pd.DataFrame({f'player_{name}': [0] for name in player})
+    df1 = pd.DataFrame({f'opposition_{name}': [0] for name in opposition})
+    df = pd.concat([df, df1], axis=1)
+    df1 = pd.DataFrame({f'ground_{name}': [0] for name in ground})
+    df = pd.concat([df, df1], axis=1)
+    str1 = f'player_{Player}'
+    df[str1]=1
+    str1 = f'opposition_{Opposition}'
+    df[str1]=1
+    str1 = f'ground_{Ground}'
+    df[str1]=1
+    df['avg_4s']=avg_4s
+    df['avg_6s']=avg_6s
+    df['avg_bf']=avg_bf
+    df['avg_sr']=avg_sr
+    df['avg_mins']=avg_mins
+    result = pipe.predict(df)
+    st.header("Predicted Runs " + str(int(result[0])))
