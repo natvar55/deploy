@@ -39,6 +39,7 @@ df['month'] = df['date'].dt.month
 df['day'] = df['date'].dt.day
 condition_train =(df['year'] > 2018)
 X_train = df.loc[condition_train]
+X_train=X_train.drop(['timestamp','opposition','date','player','ground','inns','pos','runs','year','month','day'],axis=1)
 scaler =  StandardScaler().fit(X_train)
 
 pipe = pickle.load(open('model.pkl','rb'))
