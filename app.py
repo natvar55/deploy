@@ -104,8 +104,8 @@ if st.button('Predict Score'):
     df[str1]=1
     str1 = f'ground_{Ground}'
     df[str1]=1
-    df['avg_4s']=avg_4s
-    df['avg_6s']=avg_6s
+    df['avg_4']=avg_4s
+    df['avg_6']=avg_6s
     df['avg_bf']=avg_bf
     df['avg_sr']=avg_sr
     df['avg_mins']=avg_mins
