@@ -44,26 +44,8 @@ player=['Hashmatullah Shahidi', 'Rashid Khan', 'Abdul Rahman','Fazalhaq Farooqi'
 opposition = ['Bangladesh', 'Sri Lanka', 'Pakistan', 'India', 'Australia', 'New Zealand',
  'South Africa', 'England', 'Netherlands', 'Afghanistan']
 
-ground = ['Mirpur', 'Abu Dhabi', 'Dubai (DSC)', 'Bristol', 'Cardiff',
-       'Taunton', 'Manchester', 'Southampton', 'Leeds', 'Doha',
-       'Chattogram', 'Pallekele', 'Hambantota', 'Colombo (RPS)', 'Lahore',
-       'Dharamsala', 'Delhi', 'Chennai', 'Pune', 'Lucknow', 'Wankhede',
-       'Ahmedabad', 'Sharjah', 'Fatullah', 'Canberra', 'Dunedin', 'Perth',
-       'Napier', 'Sydney', 'Amstelveen', 'Rotterdam', 'Brisbane',
-       'Chester-le-Street', 'Adelaide', 'Hobart', 'Melbourne',
-       'Hyderabad', 'Nagpur', 'Ranchi', 'Mohali', 'The Oval',
-       'Nottingham', "Lord's", 'Birmingham', 'Rajkot', 'Bengaluru',
-       'Paarl', 'Bloemfontein', 'Potchefstroom', 'Cairns', 'Centurion',
-       'Johannesburg', 'Indore', 'Jaipur', 'Harare', 'Auckland',
-       'Wellington', 'Hamilton', 'Providence', 'Eden Gardens', 'Gqeberha',
-       'Durban', 'Dambulla', 'Cape Town', 'Visakhapatnam', 'Basseterre',
-       'Christchurch', 'Nelson', 'Colombo (SSC)', 'Dublin', 'East London',
-       'Kimberley', 'Port of Spain', 'North Sound', 'Bridgetown',
-       'Colombo (PSS)', 'Queenstown', 'Karachi', 'Benoni', 'Glasgow',
-       'Faisalabad', 'Multan', 'Darwin', 'Mount Maunganui', 'Bulawayo',
-       'Cuttack', 'Kochi', 'Raipur', 'Guwahati', 'Thiruvananthapuram',
-       'Kingston', 'Gwalior', 'Vadodara', 'Kanpur', 'Rawalpindi',
-       'Belfast', 'The Hague']
+ground = ['Dharamsala', 'Delhi', 'Chennai', 'Pune', 'Lucknow', 'Wankhede',
+       'Ahmedabad', 'Bengaluru', 'Eden Gardens', 'Hyderabad']
 
 st.title('Cricket Score Predictor for Player')
 
