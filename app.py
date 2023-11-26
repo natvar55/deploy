@@ -3,6 +3,43 @@ import pickle
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
+from sklearn.preprocessing import StandardScaler
+
+df = pd.read_csv('Batsman_matches4.csv')
+df = df[df['runs'].isin(['absent', 'sub']) == False]
+df=df[df['inns'].isin(['Ireland','Bangladesh'])==False]
+df.replace('-', 0, inplace=True)
+df=df.drop(['SR','dismissal','odi_id','4s','6s','BF','mins'],axis=1)
+df['runs'] = pd.to_numeric(df['runs']).astype('int')
+df['pos'] = pd.to_numeric(df['pos']).astype('int')
+df['inns'] = pd.to_numeric(df['inns']).astype('int')
+values_to_keep = ['India','Sri Lanka','Bangladesh','Pakistan','England','New Zealand','South Africa','Australia','Netherlands','Afghanistan']
+df = df[df['opposition'].isin(values_to_keep)]
+# One-hot encoding using pandas
+one_hot_encoded = pd.get_dummies(df['player'], prefix='player')
+
+# Concatenate the one-hot encoded columns to the original DataFrame
+df = pd.concat([df, one_hot_encoded], axis=1)
+# One-hot encoding using pandas
+one_hot_encoded = pd.get_dummies(df['ground'], prefix='ground')
+
+# Concatenate the one-hot encoded columns to the original DataFrame
+df = pd.concat([df, one_hot_encoded], axis=1)
+# One-hot encoding using pandas
+one_hot_encoded = pd.get_dummies(df['opposition'], prefix='opposition')
+
+# Concatenate the one-hot encoded columns to the original DataFrame
+df = pd.concat([df, one_hot_encoded], axis=1)
+df['date'] = pd.to_datetime(df['date'], format='%d-%b-%y')
+
+df['timestamp'] = df['date'].astype(int) // 10**9  # Convert to Unix timestamp
+
+df['year'] = df['date'].dt.year
+df['month'] = df['date'].dt.month
+df['day'] = df['date'].dt.day
+condition_train =(df['year'] > 2018)
+X_train = df.loc[condition_train]
+scaler =  StandardScaler().fit(X_train)
 
 pipe = pickle.load(open('model.pkl','rb'))
 player=['Hashmatullah Shahidi', 'Rashid Khan', 'Abdul Rahman','Fazalhaq Farooqi', 'Mujeeb Ur Rahman', 'Naveen-ul-Haq',
@@ -109,6 +146,7 @@ if st.button('Predict Score'):
     df['avg_bf']=avg_bf
     df['avg_sr']=avg_sr
     df['avg_mins']=avg_mins
+    scaler.transform(df);
     result = pipe.predict(df)
     st.header("Predicted Runs " + str(int(result[0])))
 
