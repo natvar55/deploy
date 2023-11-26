@@ -131,6 +131,7 @@ with col7:
 
 
 if st.button('Predict Score'):
+    df=pd.DataFrame()
     df['avg_6']=avg_6s
     df['avg_4']=avg_4s
     df['avg_bf']=avg_bf
@@ -151,5 +152,3 @@ if st.button('Predict Score'):
     scaler.transform(df);
     result = pipe.predict(df)
     st.header("Predicted Runs " + str(int(result[0]))
-
-
