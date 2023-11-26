@@ -149,6 +149,6 @@ if st.button('Predict Score'):
     df['avg_mins']=avg_mins
     scaler.transform(df);
     result = pipe.predict(df)
-    st.header("Predicted Runs " + str(int(result[0])))
+    st.header("Predicted Runs " + str(int(df.columns)))
 
 
